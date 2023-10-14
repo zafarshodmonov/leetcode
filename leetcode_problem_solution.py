@@ -13,6 +13,14 @@ class Solution:
             dp1 = cur
 
         return min(dp0, dp1)
+    
+    def numberOfEmployeesWhoMetTarget(self, hours: list[int], target: int) -> int:
+        count = 0
+        for i in hours:
+            if i >= target:
+                count += 1
+        return count
+        
 
 
 def main() -> None:
