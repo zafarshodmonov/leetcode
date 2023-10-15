@@ -1,6 +1,22 @@
 
 class Solution:
 
+    def countMatches(self, items: list[list[str]], ruleKey: str, ruleValue: str) -> int:
+        count = 0
+        m = {"type": 0, "color": 1, "name": 2}
+        for i in items:
+            if ruleValue == i[m[ruleKey]]:
+                count += 1
+        return count
+        
+
+    def decompressRLElist(self, nums: list[int]) -> list[int]:
+        rel, i = [], 0
+        while len(nums) > 2 * i + 1:
+            rel += nums[2 * i] * [nums[2 * i + 1]]
+            i += 1
+        return rel
+
     def minCostClimbingStairs(self, cost: list[int]) -> int:
         cur = 0 
         dp0 = cost[0]
@@ -30,7 +46,6 @@ class Solution:
         return ans
       
         
-
 
 def main() -> None:
     pass
