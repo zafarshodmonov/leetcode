@@ -20,6 +20,15 @@ class Solution:
             if i >= target:
                 count += 1
         return count
+
+    def leftRightDifference(self, nums: list[int]) -> list[int]:
+        rs, ls, ans = sum(nums), 0, []
+        for i in nums:
+            rs -= i 
+            ans.append(abs(ls - rs))
+            ls += i
+        return ans
+      
         
 
 
