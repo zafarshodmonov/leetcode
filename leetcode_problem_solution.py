@@ -1,6 +1,25 @@
 
 class Solution:
 
+    
+    def fib(self, N: int) -> int:
+        """25 16.3"""
+        dp_0, dp_1 = 0, 1
+        for i in range(N):
+            dp_0, dp_1 = dp_1, dp_1 + dp_0
+        return dp_0
+    
+    def fib_map(self, n: int, memo={}) -> int:
+        """39 16.2"""
+        if n in memo:
+            return memo[n]
+        if n == 0:
+            return 0
+        if n <= 2:
+            return 1
+        memo[n] = self.fib_map(n - 1, memo) + self.fib_map(n - 2, memo)
+        return memo[n]
+
     def countMatches(self, items: list[list[str]], ruleKey: str, ruleValue: str) -> int:
         count = 0
         m = {"type": 0, "color": 1, "name": 2}
@@ -9,7 +28,6 @@ class Solution:
                 count += 1
         return count
         
-
     def decompressRLElist(self, nums: list[int]) -> list[int]:
         rel, i = [], 0
         while len(nums) > 2 * i + 1:
@@ -48,7 +66,7 @@ class Solution:
         
 
 def main() -> None:
-    pass
+    s = Solution()
 
 if __name__ == "__main__":
     main()
