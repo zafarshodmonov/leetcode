@@ -1,7 +1,65 @@
 
+
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
 class Solution:
 
+    def minCostClimbingStairs(self, cost: list[int]) -> int:
+
+        i = len(cost)
+        cost.append(0)
+        
+        def f(i, cost, memo={}):
+            if i in memo:
+                return memo[i]
+            if i == 1 or i == 0:
+                return cost[i]
+            memo[i] = cost[i] + min(f(i - 1, cost), f(i - 2, cost))
+            return memo[i]
+            
+        return f(i, cost)
     
+    def minCostClimbingStairs1(self, cost: list[int]) -> int:
+        cost.append(0)
+        for i in range(len(cost) - 3, -1, -1):
+            cost[i] += min(cost[i + 1], cost[i + 2])
+        return min(cost[0], cost[1])
+
+	# def minCostClimbingStairs1(self, cost: List[int]) -> int:
+	# 	cur = 0 
+	# 	dp0 = cost[0]
+	# 	if len(cost) >= 2:
+	# 		dp1 = cost[1]
+
+	# 	for i in range(2, len(cost)):
+	# 		cur = cost[i] + min(dp0, dp1)
+	# 		dp0 = dp1
+	# 		dp1 = cur
+
+	# 	return min(dp0, dp1)
+		
+
+    def removeElements(self, head: ListNode, val: int) -> ListNode:
+        if head is None:
+            return 
+        temp1 = head
+        temp2 = head
+        if temp1.val != val:
+            temp1 = temp1.next
+        else:
+            temp1 = temp2 = head = temp1.next
+        while temp1:
+            if temp1.val == val:
+                temp1 = temp1.next
+            else:
+                temp2, temp1 = temp2.next, temp1.next
+        return head
+
     def fib(self, N: int) -> int:
         """25 16.3"""
         dp_0, dp_1 = 0, 1
@@ -35,7 +93,7 @@ class Solution:
             i += 1
         return rel
 
-    def minCostClimbingStairs(self, cost: list[int]) -> int:
+    def minCostClimbingStairs1(self, cost: list[int]) -> int:
         cur = 0 
         dp0 = cost[0]
         if len(cost) >= 2:
@@ -62,11 +120,104 @@ class Solution:
             ans.append(abs(ls - rs))
             ls += i
         return ans
+
+    def isSubsequence(self, s: str):
+
+        def a(top: set, s: str) -> set:
+            res = set()
+            for e in top:
+                res.add(s + e)
+            return {s, *top, *res}
+            
+        # s --> "ahbgdc"
+        uzunlik = len(s) - 1  # uzunlik --> 6
+        def f(i, s):
+            if i == 1:
+                return {s[0], s[1], s[1] + s[0]}
+            top = f(i - 1, s)
+            return a(top, s[i])
+        
+        return f(uzunlik, s[::-1])
+    
+    def maxRepeating(self, sequence: str, word: str) -> int:
+        M = [len(sequence) * [0] for _ in range(len(word))]
+        
+
+        for index_word, element_word in enumerate(word):
+
+            for index_sequence, element_sequence in enumerate(sequence):
+                
+                if element_word == element_sequence:
+                    M[index_word][index_sequence] = 1
+                
+        sanagich = 0      
+        for index_m, element_m in enumerate(M[0]):
+            if element_m == 1:
+                i = 0
+                j = index_m
+
+                diagonal = []
+                while i < len(word) and j < len(sequence):
+                    if M[i][j] == 1:
+                        diagonal.append(True)
+                    else:
+                        diagonal.append(False)
+                    i += 1
+                    j += 1
+                if all(diagonal):
+                    sanagich += 1
+        return sanagich
+    
+
+    def fib(self, n: int) -> int:
+        if n < 2:
+            return n
+        return self.fib(n - 1) + self.fib(n - 2)
+
+    # 93
+    def restoreIpAddresses(self, s: str) -> list[str]:
+        ans = []
+        leng = len(s)
+        def B(temp, ex, ind):
+            if ex==4:
+                ans.append(temp[:-1])
+                return
+            y = leng - ind
+            z = (4 - (ex + 1)) * 3
+            for x in range(1, 4):
+                if (y - x <= z) and (y - x >= 0):
+                    a = s[ind:ind+x]
+                    b = int(a)
+                    if x == 2 and 10 > b:
+                        continue
+                    if x == 3 and 100 > b:
+                        continue
+                    if x == 3:
+                        if int(a) <= 255:
+                            B(temp+a+".",ex+1,ind+x)
+                    else:
+                        
+                        a = s[ind : ind + x]+"."
+                        B(temp+a, ex+1,ind+x)
+        B("", 0,0)
+        return ans
+                    
+        
+        
+
+        
+
       
         
 
 def main() -> None:
-    s = Solution()
+    solution_object = Solution()
+    sequence = "aaabaaaabaaabaaaabaaaabaaaabaaaaba"
+    word = "aaaba"
+
+    natija = solution_object.maxRepeating(sequence, word)
+
+    print(natija)
 
 if __name__ == "__main__":
     main()
