@@ -16,6 +16,74 @@ class TreeNode:
 
 class Solution:
 
+    def F106Y(self, ino: list[int], post: list[int]):
+        root = post[-1]
+        if len(post) == 1:
+            return root, [], [], [], []
+        
+        ele = post[-1]
+        ind = ino.index(ele)
+        A = (ind == 0)
+        B = (ind == len(ino) - 1)
+        if A and B:
+            pass
+        elif A and not B:
+            re_ch_ino = []
+            re_ch_post = []
+            re_on_ino = ino[ind+1:]
+            re_on_post = post[:-1]
+            return root, re_ch_ino, re_ch_post, re_on_ino, re_on_post
+        elif not A and B:
+            re_ch_ino = ino[:ind]
+            re_ch_post = post[:-1]
+            re_on_ino = 0
+            re_on_post = 0
+            return root, re_ch_ino, re_ch_post, re_on_ino, re_on_post
+        else:
+            re_ch_ino = ino[:ind]
+            re_ch_post = post[:ind]
+            re_on_ino = ino[ind+1:]
+            re_on_post = post[ind:-1]
+            return root, re_ch_ino, re_ch_post, re_on_ino, re_on_post
+
+    def F106(self, inorder: list[int], postorder: list[int]):
+        def B(ino, post):
+            if not post:
+                return None
+            res = self.F106Y(ino, post)
+            l = B(res[1], res[2])
+            r = B(res[3], res[4])
+            return TreeNode(res[0], l, r)
+        return B(inorder, postorder)
+
+    def constructFromPrePostF(self, pre: list[int], post: list[int]):
+        if len(pre) == 1:
+            return pre[0], [], [], [], []
+        ele = pre[1]
+        ind = post.index(ele)
+        B = (ind == len(post) - 2)
+        if B:
+            re_ch_pre = []
+            re_ch_post = []
+            re_on_pre = pre[1:]
+            re_on_post = post[:-1]
+            return pre[0], re_ch_pre, re_ch_post, re_on_pre, re_on_post
+        re_ch_pre = pre[1:ind+2]
+        re_ch_post = post[:ind+1]
+        re_on_pre = pre[ind+2:]
+        re_on_post = post[ind+1:-1]
+        return pre[0], re_ch_pre, re_ch_post, re_on_pre, re_on_post
+
+    def constructFromPrePost(self, preorder: list[int], postorder: list[int]):
+        def B(pre, post):
+            if not pre:
+                return None
+            res = self.constructFromPrePostF(pre, post)
+            l = B(res[1], res[2])
+            r = B(res[3], res[4])
+            return TreeNode(res[0], l, r)
+        return B(preorder, postorder)
+        
     def buildTreeF(self, pre: list[int], ino: list[int]):
 
         root_val = pre[0]
@@ -59,7 +127,6 @@ class Solution:
             return TreeNode(res[0], l, r)
         return B(preorder, inorder)
         
-
     def minCostClimbingStairs(self, cost: list[int]) -> int:
 
         i = len(cost)
@@ -80,20 +147,6 @@ class Solution:
         for i in range(len(cost) - 3, -1, -1):
             cost[i] += min(cost[i + 1], cost[i + 2])
         return min(cost[0], cost[1])
-
-	# def minCostClimbingStairs1(self, cost: List[int]) -> int:
-	# 	cur = 0 
-	# 	dp0 = cost[0]
-	# 	if len(cost) >= 2:
-	# 		dp1 = cost[1]
-
-	# 	for i in range(2, len(cost)):
-	# 		cur = cost[i] + min(dp0, dp1)
-	# 		dp0 = dp1
-	# 		dp1 = cur
-
-	# 	return min(dp0, dp1)
-		
 
     def removeElements(self, head: ListNode, val: int) -> ListNode:
         if head is None:
@@ -219,13 +272,11 @@ class Solution:
                     sanagich += 1
         return sanagich
     
-
     def fib(self, n: int) -> int:
         if n < 2:
             return n
         return self.fib(n - 1) + self.fib(n - 2)
 
-    # 93
     def restoreIpAddresses(self, s: str) -> list[str]:
         ans = []
         leng = len(s)
@@ -254,13 +305,6 @@ class Solution:
         return ans
                     
         
-        
-
-        
-
-      
-        
-
 def main() -> None:
     solution_object = Solution()
     sequence = "aaabaaaabaaabaaaabaaaabaaaabaaaaba"
