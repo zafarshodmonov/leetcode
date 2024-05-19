@@ -1,5 +1,3 @@
-import random
-
 def restoreIpAddresses(s: str) -> list[str]:
     ans = []
     leng = len(s)
@@ -26,11 +24,3 @@ def restoreIpAddresses(s: str) -> list[str]:
                     B(temp+a, ex+1,ind+x)
     B("", 0,0)
     return ans
-
-def random_IP(n: int) -> list[str]:
-    rel = []
-    for i in range(n):
-        rel.append(f"{random.randint(0, 255)}{random.randint(0, 255)}{random.randint(0, 255)}{random.randint(0, 255)}")
-    return rel
-
-

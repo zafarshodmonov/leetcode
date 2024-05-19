@@ -7,7 +7,58 @@ class ListNode:
         self.next = next
 
 
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
 class Solution:
+
+    def buildTreeF(self, pre: list[int], ino: list[int]):
+
+        root_val = pre[0]
+        ind = ino.index(root_val)
+
+        A = (ind == 0)
+        B = (ind == len(ino) - 1)
+
+        if A and B:
+            re_ch_ino = []
+            re_ch_pre = []
+            re_on_ino = []
+            re_on_pre = []
+            return root_val, re_ch_ino, re_ch_pre, re_on_ino, re_on_pre
+        elif A and not B:
+            re_ch_ino = []
+            re_ch_pre = []
+            re_on_ino = ino[1:]
+            re_on_pre = pre[1:]
+            return root_val, re_ch_ino, re_ch_pre, re_on_ino, re_on_pre
+        elif not A and B:
+            re_ch_ino = ino[:-1]
+            re_ch_pre = pre[1:]
+            re_on_ino = []
+            re_on_pre = []
+            return root_val, re_ch_ino, re_ch_pre, re_on_ino, re_on_pre
+        else:
+            re_ch_ino = ino[:ind]
+            re_ch_pre = pre[1:ind + 1]
+            re_on_ino = ino[ind + 1:]
+            re_on_pre = pre[ind + 1:]
+            return root_val, re_ch_ino, re_ch_pre, re_on_ino, re_on_pre
+
+    def buildTree(self, preorder: list[int], inorder: list[int]):
+        def B(pre, ino):
+            if not pre:
+                return None
+            res = self.buildTreeF(pre, ino)
+            l = B(res[2], res[1])
+            r = B(res[4], res[3])
+            return TreeNode(res[0], l, r)
+        return B(preorder, inorder)
+        
 
     def minCostClimbingStairs(self, cost: list[int]) -> int:
 
