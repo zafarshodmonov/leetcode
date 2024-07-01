@@ -1,8 +1,8 @@
-from p310 import Solution
+from problems import LeetCode
 
 
 def main():
-    solution = Solution()
+    solution = LeetCode()
 
     # Input
     n = 4 
