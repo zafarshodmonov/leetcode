@@ -1,5 +1,6 @@
-from typing import List
 from functools import lru_cache
+from typing import List
+
 
 class WeeklyContest400:
     pass
@@ -18,39 +19,6 @@ class WeeklyContest403:
 
 
 class WeeklyContest404:
-
-    def help_B1(self, nums: list[int]) -> list[list[int]]:
-        
-        rel = []
-        n = len(nums)
-
-        for i in range(n):
-
-            item = nums[i]
-
-            if not (rel == []):
-                kel = rel.copy()
-                for j in kel:
-                    h = j[:]
-                    h.append(item)
-                    rel.append(h)
-
-            rel.append([item])
-
-        return rel
-
-    def help_B(self, nums: list[int]) -> bool:
-        
-        n = len(nums)
-        if n <= 1:
-            return
-        juft_or_toq = (nums[0] + nums[1]) % 2
-        for i in range(n - 1):
-            if (nums[i] + nums[i + 1]) % 2 == juft_or_toq:
-                pass
-            else:
-                return False
-        return True
 
     def help_A(self, A: int, B: int) -> int:
         nav = True
