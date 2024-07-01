@@ -1,3 +1,5 @@
+from typing import List
+from functools import lru_cache
 
 class WeeklyContest400:
     pass
@@ -18,19 +20,23 @@ class WeeklyContest403:
 class WeeklyContest404:
 
     def help_B1(self, nums: list[int]) -> list[list[int]]:
-        # nums = [1, 2, 3]
-        rel = []  # rel = [[1], [1, 2], [2]]
-        n = len(nums)  # n = 3
+        
+        rel = []
+        n = len(nums)
 
-        for i in range(n):  # 0 +1 2
-            item = nums[i]  # item = 2
+        for i in range(n):
+
+            item = nums[i]
+
             if not (rel == []):
-                for j in rel:  # [1]
-                    h = j[:]  # h = [1, 2]
+                kel = rel.copy()
+                for j in kel:
+                    h = j[:]
                     h.append(item)
                     rel.append(h)
 
             rel.append([item])
+
         return rel
 
     def help_B(self, nums: list[int]) -> bool:
@@ -73,9 +79,22 @@ class WeeklyContest404:
     def maxHeightOfTriangle(self, red: int, blue: int) -> int:
         return max(self.help_A(red, blue), self.help_A(blue, red))
     
-    def maximumLength(self, nums: list[int]) -> int:
-        pass
+    def maximumLength(self, nums: List[int]) -> int:
 
+        @lru_cache
+        def dfs(i, m):
+            for j in range(i + 1, len(nums)):
+                if (nums[i] + nums[j]) % 2 == m:
+                    return dfs(j, m) + 1
+
+            return 0
+
+        best = 0
+        for i in range(len(nums)):
+            best = max(best, max(dfs(i, 0), dfs(i, 1)) + 1)
+
+        return best
+    
     def maximumLength2(self, nums: list[int], k: int) -> int:
         pass
 

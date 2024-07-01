@@ -7,10 +7,10 @@ def main():
     biweekly = BiweeklyContest131()
 
     # Input
-    nums = [1, 2, 3]
+    nums = [1, 2, 3, 4]
 
     # processing
-    ans = weekly.help_B1(nums)
+    ans = weekly.maximumLength(nums)
 
     # Output
     print(ans)
