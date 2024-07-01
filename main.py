@@ -1,10 +1,18 @@
-import calendar
-import datetime
+from p310 import Solution
 
-def main() -> None:
-    ca = calendar.Calendar()
-    for i in ca.itermonthdates(2023, 10):
-        print(i)
+
+def main():
+    solution = Solution()
+
+    # Input
+    n = 4 
+    edges = [[1,0],[1,2],[1,3]]
+
+    # Processing
+    ans = solution.findMinHeightTrees(n, edges)
+
+    # Output
+    print(ans)
 
 if __name__ == "__main__":
     main()
