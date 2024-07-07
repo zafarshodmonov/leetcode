@@ -7,8 +7,8 @@ from weekly_contest import WeeklyContest400
 leetcode = LeetCode()
 
 @pytest.mark.parametrize(
-        "nums, target, out",
-        leetcode.F1_test()
+        "s, out",
+        leetcode.F20_test()
 )
-def test_F1(nums, target, out):
-    assert leetcode.F1(nums, target) == out
+def test_leetcode(s, out):
+    assert leetcode.F20(s) == out
