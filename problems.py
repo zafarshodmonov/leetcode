@@ -1,3 +1,5 @@
+
+
 class LeetCodeTest:
 
     @staticmethod
@@ -29,7 +31,25 @@ class LeetCodeTest:
         ]
 
 
-class LeetCode(LeetCodeTest):
+class LeetCodeHelp:
+
+    @staticmethod
+    def F412_help_1():
+        return "FizzBuzz"
+
+    @staticmethod
+    def F412_help_2():
+        return "Fizz"
+    
+    @staticmethod
+    def F412_help_3():
+        return "Buzz"
+
+    def F412_help_4(self, n: int) -> str:
+        return str(n)
+
+
+class LeetCode(LeetCodeTest, LeetCodeHelp):
 
     def F1(self, nums: list[int], target: int) -> list[int]:
         m = {}
@@ -60,21 +80,6 @@ class LeetCode(LeetCodeTest):
                 stack.append(l)
         return True if stack == [] else False
 
-    @staticmethod
-    def F412_help_1():
-        return "FizzBuzz"
-
-    @staticmethod
-    def F412_help_2():
-        return "Fizz"
-    
-    @staticmethod
-    def F412_help_3():
-        return "Buzz"
-
-    def F412_help_4(self, n: int) -> str:
-        return str(n)
-
     def F412(self, n: int) -> list[str]:
         rel = []
         for i in range(1, n + 1):
@@ -89,5 +94,4 @@ class LeetCode(LeetCodeTest):
             else:
                 rel.append(self.F412_help_4(i))
         return rel 
-
-        
+    
